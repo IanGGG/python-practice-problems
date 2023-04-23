@@ -1,5 +1,6 @@
 from tree import Tree
 
+
 def prune_tree(tree, keys_to_discard):
     '''
     Returns a new tree with that is identical to the original tree, except
@@ -10,11 +11,19 @@ def prune_tree(tree, keys_to_discard):
     Inputs:
         tree: a Tree instance.
         keys_to_discard: set of keys.
-    
+
     Returns: (Tree) the pruned tree.
     '''
-    
-    pass
+    if tree.key in keys_to_discard:
+        return Tree()
+    elif not tree.children:
+        return Tree(tree.key, tree.value)
+    else:
+        new_t = Tree(tree.key, tree.value)
+        for st in tree.children:
+            if st.key not in keys_to_discard:
+                new_t.add_child(prune_tree(st, keys_to_discard))
+        return new_t
 
 
 #############################################################
